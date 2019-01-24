@@ -28,6 +28,15 @@ class Instructor extends Person {
   grade (student, subject) {
     console.log(`${student.name} receives a perfect score on ${subject}`);
   }
+
+  changeScore (student) {
+    const amount = Math.floor(Math.random() * 100);
+    if (student.grade > 50) {
+      student.grade -= amount;
+    } else {
+      student.grade += amount;
+    }
+  }
 }
 
 class Student extends Person {
@@ -36,6 +45,7 @@ class Student extends Person {
     this.previousBackground = attributes.previousBackground;
     this.className = attributes.className;
     this.favSubjects = attributes.favSubjects;
+    this.grade = attributes.grade;
   }
 
   listSubjects () {
@@ -48,6 +58,14 @@ class Student extends Person {
 
   sprintChallenge (subject) {
     console.log(`${this.name} has begun sprint challenge on ${subject}`);
+  }
+
+  graduate () {
+    if (this.grade > 70) {
+      console.log(`${this.name} has graduated with a whopping high score of ${this.grade}%`);
+    } else {
+      this.grade += 5;
+    }
   }
 }
 
@@ -76,7 +94,8 @@ const omarSalahEddine = new Student({
   gender: 'male',
   previousBackground: 'College student',
   className: 'WEB17',
-  favSubjects: ['cat grooming', 'bakery sciences']
+  favSubjects: ['cat grooming', 'bakery sciences'],
+  grade: 100
 });
 
 const javontayMcElroy = new Student({
@@ -86,7 +105,8 @@ const javontayMcElroy = new Student({
   gender: 'male',
   className: 'WEB17',
   previousBackground: `Dunkin' Donuts`,
-  favSubjects: ['digital art']
+  favSubjects: ['digital art'],
+  grade: 100
 });
 
 omarSalahEddine.listSubjects();
@@ -140,5 +160,6 @@ const ryanBoris = new ProjectManager({
   favInstructor: 'Josh'
 });
 
+ryanBoris.debugCode(javontayMcElroy, 'lambda classes');
 adamMcKenney.standUp('#web17_adam');
-ryanBoris.debugCode(omarSalahEddine, 'lambda classes');
+adamMcKenney.changeScore(omarSalahEddine);
