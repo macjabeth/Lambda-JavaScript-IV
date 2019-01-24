@@ -30,7 +30,7 @@ class Instructor extends Person {
   }
 
   changeScore (student) {
-    const amount = Math.floor(Math.random() * 100);
+    const amount = Math.floor(Math.random() * 50);
     if (student.grade > 50) {
       student.grade -= amount;
     } else {
@@ -112,6 +112,7 @@ const javontayMcElroy = new Student({
 omarSalahEddine.listSubjects();
 javontayMcElroy.sprintChallenge('JS IV');
 omarSalahEddine.prAssignment('Project #4');
+omarSalahEddine.graduate();
 
 const joshKnell = new Instructor({
   name: 'Josh',
@@ -133,6 +134,7 @@ const ryanHamblin = new Instructor({
   catchPhrase: `Let's get diggy with it`
 });
 
+joshKnell.speak();
 joshKnell.demo('Prototypal Inheritance');
 ryanHamblin.grade(javontayMcElroy, 'CSS Preprocessors');
 
