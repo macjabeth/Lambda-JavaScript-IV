@@ -49,8 +49,9 @@ class CharacterStats extends GameObject {
     this.name = attributes.name;
   }
 
-  takeDamage () {
-    return `${this.name} took damage.`;
+  takeDamage (amount) {
+    this.healthPoints -= amount;
+    if (this.healthPoints < 0) this.healthPoints = 0;
   }
 }
 
@@ -180,7 +181,7 @@ class Hero extends Humanoid {
 
     this.revitalise(healed);
 
-    target.healthPoints -= damage;
+    target.takeDamage(damage);
 
     console.log(`"Nebula valesti!" shouts ${this.name}, his holy claymore hurtling down and cutting a deep gash across ${target.name}'s ${getLimb()}.`);
     if (!this.befuddled) console.log(`The holy pact with his deity aids him in his plight: his health has risen by ${healed} point${healed > 1 ? 's' : ''}.`);
@@ -207,7 +208,7 @@ class Villain extends Humanoid {
   waveStaff (target) {
     const damage = this.weaponDamage + getRandomInt(20);
 
-    target.healthPoints -= damage;
+    target.takeDamage(damage);
 
     console.log(`Dark tendrils whip around ${this.name}'s ${this.weapons} as he points it at ${target.name}, sapping away at his resolve.`);
     console.log(`He hits for ${damage} health points: ${target.healthPoints} / 100`);
@@ -258,10 +259,8 @@ const adam = new Villain({
 
 console.log('***** LET THE BATTLE BEGIN *****');
 
-let battling;
-
-do {
-  battling = Math.random() > 0.5 ? adam.waveStaff(josh) : josh.holyStrike(adam);
+const battleID = setInterval(() => {
+  const status = Math.random() > 0.5 ? adam.waveStaff(josh) : josh.holyStrike(adam);
   console.log('---');
-}
-while (battling);
+  if (!status) clearInterval(battleID);
+}, 2500);
